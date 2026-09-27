@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Pedidos - IFSC Garopaba</title>
+  
+  <!-- Bootstrap 5 CSS & Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="py-4">
+  <div class="container">
+    
+    <!-- Cabeçalho -->
+    <header class="text-center mb-4">
+      <div class="mb-2">
+        <span class="badge bg-success text-dark fw-bold px-3 py-2">IFSC GAROPABA • PROGWEB 2</span>
+      </div>
+      <h1 class="fw-bold text-white mb-2">
+        <i class="bi bi-shop text-warning me-2"></i>Lanchonete Express — Calculadora de Pedidos
+      </h1>
+      <p class="text-secondary small mb-0">
+        Roteiro Prático 03: Praticando Bootstrap 5, Seletores jQuery, Eventos em Tempo Real (<code>input/change</code>), Cálculos Numéricos e Persistência no LocalStorage.
+      </p>
+    </header>
+
+    <div class="row g-4">
+
+      <!-- COLUNA DA ESQUERDA: Monte o Seu Pedido -->
+      <div class="col-lg-7">
+        <div class="card card-custom h-100">
+          <div class="card-header-custom d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 fw-bold text-white">
+              <i class="bi bi-basket-fill text-info me-2"></i>1. Monte o Seu Pedido
+            </h5>
+            <span class="badge bg-secondary">Cálculo Automático</span>
+          </div>
+
+          <div class="card-body p-4">
+            <form id="form-pedido" onsubmit="return false;">
+              
+              <!-- Select Lanche Principal -->
+              <div class="mb-4">
+                <label for="select-lanche" class="form-label text-light fw-semibold">
+                  <i class="bi bi-egg-fried me-1 text-warning"></i> Escolha o Lanche Principal:
+                </label>
+                <select class="form-select bg-dark text-light border-secondary" id="select-lanche">
+                  <option value="24.00">Combo Vegano Verde — R$ 24,00</option>
+                  <option value="28.00">X-Bacon Especial — R$ 28,00</option>
+                  <option value="32.00">X-Tudo da Casa — R$ 32,00</option>
+                  <option value="21.00">Hambúrguer Clássico — R$ 21,00</option>
+                </select>
+              </div>
+
+              <!-- Adicionais Opcionais -->
+              <div class="mb-4">
+                <label class="form-label text-light fw-semibold mb-2">
+                  <i class="bi bi-plus-circle-fill me-1 text-success"></i> Adicionais Opcionais:
+                </label>
+                <div class="row g-2">
+                  <div class="col-md-6">
+                    <div class="form-check form-switch bg-dark p-2 ps-5 rounded border border-secondary d-flex align-items-center justify-content-between">
+                      <input class="form-check-input check-adicional" type="checkbox" id="queijo" value="4.00">
+                      <label class="form-check-label text-light w-100 d-flex justify-content-between pe-2 cursor-pointer" for="queijo">
+                        <span>Queijo Extra</span>
+                        <span class="badge-price">+ R$ 4,00</span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-check form-switch bg-dark p-2 ps-5 rounded border border-secondary d-flex align-items-center justify-content-between">
+                      <input class="form-check-input check-adicional" type="checkbox" id="bacon" value="5.00">
+                      <label class="form-check-label text-light w-100 d-flex justify-content-between pe-2 cursor-pointer" for="bacon">
+                        <span>Bacon Crocante</span>
+                        <span class="badge-price">+ R$ 5,00</span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-check form-switch bg-dark p-2 ps-5 rounded border border-secondary d-flex align-items-center justify-content-between">
+                      <input class="form-check-input check-adicional" type="checkbox" id="batata" value="8.00">
+                      <label class="form-check-label text-light w-100 d-flex justify-content-between pe-2 cursor-pointer" for="batata">
+                        <span>Batata Frita P</span>
+                        <span class="badge-price">+ R$ 8,00</span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-check form-switch bg-dark p-2 ps-5 rounded border border-secondary d-flex align-items-center justify-content-between">
+                      <input class="form-check-input check-adicional" type="checkbox" id="refrigerante" value="6.00">
+                      <label class="form-check-label text-light w-100 d-flex justify-content-between pe-2 cursor-pointer" for="refrigerante">
+                        <span>Refrigerante Lata</span>
+                        <span class="badge-price">+ R$ 6,00</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Quantidade e Entrega -->
+              <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                  <label for="input-qtd" class="form-label text-light fw-semibold">
+                    <i class="bi bi-hash me-1 text-warning"></i> Quantidade de Lanches:
+                  </label>
+                  <div class="input-group">
+                    <button class="btn btn-outline-secondary text-light" type="button" id="btn-menos">-</button>
+                    <input type="number" class="form-control bg-dark text-light border-secondary text-center fw-bold" id="input-qtd" value="1" min="1" max="20">
+                    <button class="btn btn-outline-secondary text-light" type="button" id="btn-mais">+</button>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label for="select-entrega" class="form-label text-light fw-semibold">
+                    <i class="bi bi-truck me-1 text-info"></i> Tipo de Entrega:
+                  </label>
+                  <select class="form-select bg-dark text-light border-secondary" id="select-entrega">
+                    <option value="0.00">Retirar no Local (Grátis)</option>
+                    <option value="7.00">Tele-entrega (+ R$ 7,00)</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Cupom de Desconto -->
+              <div class="mb-3">
+                <label for="input-cupom" class="form-label text-light fw-semibold">
+                  <i class="bi bi-ticket-perforated-fill me-1 text-warning"></i> Cupom de Desconto:
+                </label>
+                <div class="input-group">
+                  <input type="text" class="form-control bg-dark text-light border-secondary text-uppercase" id="input-cupom" placeholder="Ex: 20 ou PROMO10">
+                  <button class="btn btn-outline-info" type="button" id="btn-aplicar-cupom">Aplicar Cupom</button>
+                </div>
+                <div id="msg-cupom" class="form-text d-none mt-1"></div>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- COLUNA DA DIREITA: Resumo Financeiro -->
+      <div class="col-lg-5">
+        <div class="card card-custom h-100 d-flex flex-column justify-content-between">
+          <div class="card-header-custom">
+            <h5 class="mb-0 fw-bold text-white">
+              <i class="bi bi-receipt-cutoff text-success me-2"></i>2. Resumo Financeiro
+            </h5>
+          </div>
+
+          <div class="card-body p-4 d-flex flex-column justify-content-between">
+            <ul class="list-group list-group-flush mb-4 rounded border border-secondary">
+              <li class="list-group-item bg-dark text-light d-flex justify-content-between">
+                <span>Lanche Unitário:</span>
+                <strong id="res-lanche-unit">R$ 0,00</strong>
+              </li>
+              <li class="list-group-item bg-dark text-light d-flex justify-content-between">
+                <span>Soma dos Adicionais:</span>
+                <strong id="res-adicionais">R$ 0,00</strong>
+              </li>
+              <li class="list-group-item bg-dark text-light d-flex justify-content-between">
+                <span>Subtotal (Lanche + Adicionais) x Qtd:</span>
+                <strong id="res-subtotal">R$ 0,00</strong>
+              </li>
+              <li class="list-group-item bg-dark text-light d-flex justify-content-between">
+                <span>Taxa de Entrega:</span>
+                <strong id="res-entrega" class="text-info">R$ 0,00</strong>
+              </li>
+              <li class="list-group-item bg-dark text-light d-flex justify-content-between">
+                <span>Desconto Aplicado:</span>
+                <strong id="res-desconto" class="text-danger">- R$ 0,00</strong>
+              </li>
+            </ul>
+
+            <!-- Caixa de Destaque com o Total -->
+            <div class="total-box text-center p-3 mb-4 rounded">
+              <div class="text-uppercase small fw-bold text-white tracking-wider">VALOR TOTAL A PAGAR</div>
+              <div class="total-amount fs-1 fw-bolder text-white" id="total-geral">R$ 0,00</div>
+              <small class="text-white opacity-75">Atualizado em tempo real via jQuery</small>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button type="button" class="btn btn-success btn-lg fw-bold" id="btn-finalizar">
+                <i class="bi bi-check-circle-fill me-2"></i>Finalizar & Salvar Pedido
+              </button>
+              <button type="button" class="btn btn-outline-danger btn-sm" id="btn-limpar">
+                <i class="bi bi-trash-fill me-1"></i>Limpar Pedido & Storage
+              </button>
+            </div>
+
+            <div id="alerta-sucesso" class="alert alert-success mt-3 d-none mb-0" role="alert">
+              <i class="bi bi-check2-all me-1"></i> Pedido salvo no LocalStorage!
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- jQuery & Bootstrap JS CDN -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
